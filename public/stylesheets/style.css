@@ -1,0 +1,11 @@
+#send-form,
+.content {
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+}
+.content {
+  height: 400px;
+  background: grey;
+  margin-bottom: 30px;
+}
