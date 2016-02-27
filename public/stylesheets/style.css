@@ -1,11 +1,18 @@
 #send-form,
-.content {
+#content{
   width: 100%;
   max-width: 750px;
   margin: 0 auto;
 }
-.content {
-  height: 400px;
-  background: grey;
-  margin-bottom: 30px;
+
+#room-list {
+  float: right;
+  width: 30%;
+}
+
+#messages {
+  width: 70%;
+  background-color: gray;
+  height: 500px;
+  overflow: auto;
 }

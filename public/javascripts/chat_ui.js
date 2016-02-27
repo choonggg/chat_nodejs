@@ -7,15 +7,18 @@ function divSystemContentElement(message) {
 }
 
 function processUserInput(chatApp, socket) {
-  var message: $('#send-message').val(), systemMessage;
+  var message = $('#send-message').val()
+    , systemMessage;
 
-  if (message.chatAt(0) == '/') {
+  // If user input begins with a slash, treat it as a command
+  if (message[0] == '/') {
     systemMessage = chatApp.processCommand(message);
     if (systemMessage) {
       $('#messages').append(divSystemContentElement(systemMessage));
     }
-  }
-  else {
+
+  // Broadcast non-command input to other users
+  } else {
     chatApp.sendMessage($('#room').text(), message);
     $('#messages').append(divEscapedContentElement(message));
     $('#messages').scrollTop($('#messages').prop('scrollHeight'));
@@ -26,21 +29,23 @@ function processUserInput(chatApp, socket) {
 
 var socket = io.connect();
 
-$(document).ready(function(){
+$(document).ready(function() {
   var chatApp = new Chat(socket);
 
-  socket.on('nameResult', function(result){
+  // Display the results of a name change attempt
+  socket.on('nameResult', function(result) {
     var message;
 
     if (result.success) {
       message = 'You are now known as ' + result.name + '.';
+    } else {
+      message = result.message;
     }
-    else {
-      message = result.messages;
-    }
-    $('messages').append(divSystemContentElement(messages));
-  })
-    // Display the results of a room change
+
+    $('#messages').append(divSystemContentElement(message));
+  });
+
+  // Display the results of a room change
   socket.on('joinResult', function(result) {
     $('#room').text(result.room);
     $('#messages').append(divSystemContentElement('Room changed.'));

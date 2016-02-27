@@ -17,14 +17,14 @@ Chat.prototype.changeRoom = function(room) {
 };
 
 Chat.prototype.processCommand = function(command) {
-  var words = command.split(' ');
-  var command = words[0]
-    .substring(1, words[0].length)
-    .toLowerCase();
-  var message = false;
+  var words = command.split(' '),
+    // Parse command from first word
+    command = words[0].substring(1, words[0].length).toLowerCase(),
+    message = false;
 
   switch(command) {
     case 'join':
+      words.shift();
       var room = words.join(' ');
       this.changeRoom(room);
       break;
@@ -35,7 +35,7 @@ Chat.prototype.processCommand = function(command) {
       break;
     default:
       message = 'Unrecognize Command';
-      break:
+      break;
   }
 
   return message;
